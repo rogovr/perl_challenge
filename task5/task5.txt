@@ -1,0 +1,50 @@
+a) установить права на запись в эту директорию для всех пользователей;
+Не очень понятно, что имеется ввиду под "Все пользователи". Если для всех, кроме владельца и группы владельца, то минимальный уровень доступа:
+~ # chmod 003 /var/logs/archive
+~ # sudo -su rrogov
+bash-4.2$ ls -lad /var/logs/archive/
+d-------wx 2 root root 4096 May 31 16:35 /var/logs/archive/
+bash-4.2$ whoami
+rrogov
+bash-4.2$ touch /var/logs/archive/file.txt
+bash-4.2$ mv /var/logs/archive/file.txt /var/logs/archive/file_new.txt
+bash-4.2$
+
+b) распаковать архив backup.tar.gz;
+~ # ls /var/logs/archive/
+backup.tar.gz
+~ # tar -xvf /var/logs/archive/backup.tar.gz -C /var/logs/archive/
+backup/
+backup/file1.txt
+backup/file3.txt
+backup/file1.tmp
+backup/file2.txt
+backup/file2.tmp
+backup/file3.tmp
+~ # ls /var/logs/archive/
+backup  backup.tar.gz
+~ #
+
+c) удалить все файлы имена которых заканчиваются на .tmp;
+~ # ls /var/logs/archive/backup
+file1.tmp  file1.txt  file2.tmp  file2.txt  file3.tmp  file3.txt
+~ # rm /var/logs/archive/backup/*.tmp
+rm: remove regular empty file ‘/var/logs/archive/backup/file1.tmp’? y
+rm: remove regular empty file ‘/var/logs/archive/backup/file2.tmp’? y
+rm: remove regular empty file ‘/var/logs/archive/backup/file3.tmp’? y
+~ # ls /var/logs/archive/backup
+file1.txt  file2.txt  file3.txt
+~ #
+
+d) вывести имена всех файлов которые содержат строку user deleted.
+~ # ls /var/logs/archive/backup
+file1.txt  file2.txt  file3.txt
+~ # grep -ril 'user deleted' /var/logs/archive/backup/
+/var/logs/archive/backup/file1.txt
+/var/logs/archive/backup/file2.txt
+~ # grep -ri 'user deleted' /var/logs/archive/backup/
+/var/logs/archive/backup/file1.txt:user deleted
+/var/logs/archive/backup/file2.txt:user deleted
+~ # cat /var/logs/archive/backup/file3.txt
+user saved
+~ #  

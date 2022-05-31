@@ -1,0 +1,48 @@
+
+mysql> create database task4;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use task4
+Database changed
+mysql> CREATE TABLE domains (
+    -> id INT(8) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> dname VARCHAR(255) NOT NULL,
+    -> user_id INT NOT NULL
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+mysql>
+mysql> CREATE TABLE users (
+    -> user_id INT(8) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> name VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+mysql>
+mysql> SET NAMES 'utf8mb4';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SET CHARACTER SET utf8mb4;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO `users` (name) VALUES ("Роман Рогов");
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> INSERT INTO `users` (name) VALUES ("Иван Иванов");
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> INSERT INTO `domains` (dname, user_id) VALUES ('domain1.ru', '1');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO `domains` (dname, user_id) VALUES ('domain2.ru', '2');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO `domains` (dname, user_id) VALUES ('domain2.com', '2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT dname FROM domains WHERE user_id=(SELECT user_id FROM users WHERE name='Иван Иванов');
++-------------+
+| dname       |
++-------------+
+| domain2.ru  |
+| domain2.com |
++-------------+
+2 rows in set, 1 warning (0.00 sec)
