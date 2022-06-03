@@ -3,7 +3,6 @@ package Cat;
 
 sub new{
 	my ($class, @data) = @_;
-	#my $self = Animal->new('cat', @data[0], @data[1]);	
 	my $self = $class->SUPER::new('cat', @data[0], @data[1]);
 	bless($self, $class);
         return $self;
