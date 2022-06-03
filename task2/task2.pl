@@ -7,3 +7,9 @@ $kenny->setName('FavoriteKenny');
 $kenny->getName();
 
 $tom = new Cat('Tom', 'gray'); #It is not necessary to specify the type of the animal - it is always defined in the cat inside the child class
+
+$kenny->eat('meat');
+$kenny->eat('bone');
+$kenny->getEaten();
+
+$tom->eat('milk');
